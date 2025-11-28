@@ -5,101 +5,80 @@ import java.util.Scanner;
 
 public class CalculadoraSimples {
 
-    private final History history;
+    private final ArrayList<String> historico = new ArrayList<>();
+    private Scanner sc; 
 
     public CalculadoraSimples() {
-        this.history = new History();
+        sc = new Scanner(System.in);
     }
 
     public static void main(String[] args) {
-        new CalculadoraSimples().run();
+        CalculadoraSimples app = new CalculadoraSimples();
+        app.startProgram(); 
     }
 
-    private void run() {
-        Scanner scanner = new Scanner(System.in);
-        int opcao;
-
+    public void startProgram() {
         while (true) {
             mostrarMenu();
-            opcao = lerInteiro(scanner);
-
-            if (opcao == 0) {
-                System.out.println("Encerrando a calculadora...");
-                break;
-            }
-
-            if (opcao == 5) {
-                mostrarHistorico();
+            int opt = 0;
+            try {
+                opt = sc.nextInt();
+            } catch (Exception e) {
+                System.out.println("Entrada inválida!");
+                sc.next(); 
                 continue;
             }
 
-            System.out.print("Digite o primeiro número: ");
-            int a = lerInteiro(scanner);
-
-            System.out.print("Digite o segundo número: ");
-            int b = lerInteiro(scanner);
-
-            String resultado = executarOperacao(opcao, a, b);
-
-            if (resultado != null) {
-                System.out.println("Resultado: " + resultado);
-                history.add(resultado);
+            if (opt == 0) {
+                System.out.println("Saindo...");
+                break;
             }
-        }
 
-        scanner.close();
-    }
+            if (opt == 5) {
+                MostrarHistorico();
+                continue;
+            }
 
-    private String executarOperacao(int opcao, int a, int b) {
+            System.out.print("Informe primeiro numero: ");
+            int n1 = sc.nextInt();
 
-        return switch (opcao) {
-            case 1 -> a + " + " + b + " = " + (a + b);
-            case 2 -> a + " - " + b + " = " + (a - b);
-            case 3 -> a + " * " + b + " = " + (a * b);
-            case 4 -> {
-                if (b == 0) {
-                    System.out.println("Erro: divisão por zero não permitida!");
-                    yield null;
+            System.out.print("Informe segundo numero: ");
+            int n2 = sc.nextInt();
+
+            if (opt == 1) {
+                String r = n1 + " + " + n2 + " = " + (n1 + n2);
+                System.out.println("Resultado: " + r);
+                historico.add(r);
+            } else if (opt == 2) {
+                String res = n1 + " - " + n2 + " = " + (n1 - n2);
+                System.out.println("Resultado: " + res);
+                historico.add(res);
+            } else if (opt == 3) {
+                int mul = n1 * n2;
+                System.out.println("Multiplicacao => " + n1 + " * " + n2 + " = " + mul);
+                historico.add(n1 + " * " + n2 + " = " + mul);
+            } else if (opt == 4) {
+                if (n2 == 0) {
+                    System.out.println("Nao pode dividir por zero!");
+                    historico.add("Tentativa de dividir " + n1 + " por 0");
+                } else {
+                    int div = n1 / n2;
+                    System.out.println("Divisao: " + n1 + "/" + n2 + " = " + div);
+                    historico.add(n1 + " / " + n2 + " = " + div);
                 }
-                yield a + " / " + b + " = " + (a / b);
+            } else {
+                System.out.println("Opcao invalida! (legacy)");
             }
-            default -> {
-                System.out.println("Opção inválida.");
-                yield null;
-            }
-        };
+        } 
+
+        sc.close();
     }
 
     private void mostrarMenu() {
-        System.out.println("\n=== Calculadora Simples ===");
-        System.out.println("1. Soma");
-        System.out.println("2. Subtração");
-        System.out.println("3. Multiplicação");
-        System.out.println("4. Divisão");
-        System.out.println("5. Ver histórico");
-        System.out.println("0. Sair");
-        System.out.print("Escolha uma opção: ");
-    }
-
-    private void mostrarHistorico() {
-        ArrayList<String> lista = history.getAll();
-
-        if (lista.isEmpty()) {
-            System.out.println("Nenhuma operação realizada ainda.");
-            return;
-        }
-
-        System.out.println("\n=== Histórico de Operações ===");
-        for (String h : lista) {
-            System.out.println(h);
-        }
-    }
-
-    private int lerInteiro(Scanner scanner) {
-        while (!scanner.hasNextInt()) {
-            System.out.print("Valor inválido. Digite um número inteiro: ");
-            scanner.next();
-        }
-        return scanner.nextInt();
-    }
-}
+        System.out.println("\n--- Menu da Calculadora (LEGADO) ---");
+        System.out.println("1 - Soma");
+        System.out.println("2 - Subtracao");
+        System.out.println("3 - Multiplicacao");
+        System.out.println("4 - Divisao");
+        System.out.println("5 - Historico");
+        System.out.println("0 - Sair");
