@@ -3,11 +3,13 @@ package test;
 import core.Calculator;
 import core.History;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-public class History {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    void somaDeveFuncionar() {
+public class HistoryTest {
+
+    @Test
+    public void somaDeveFuncionar() {
         History history = new History();
         Calculator calc = new Calculator(history);
 
@@ -16,5 +18,3 @@ public class History {
         assertEquals("5 + 7 = 12", resultado);
     }
 }
-
-
