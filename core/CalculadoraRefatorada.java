@@ -1,84 +1,101 @@
 package core;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class CalculadoraSimples {
+public class CalculadoraRefatorada {
 
-    private final Calculator calculator; 
     private final History history;
 
-    public CalculadoraSimples() {
+    public CalculadoraRefatorada() {
         this.history = new History();
-        this.calculator = new Calculator(history); 
     }
 
     public static void main(String[] args) {
-        new CalculadoraSimples().run(); 
+        CalculadoraRefatorada app = new CalculadoraRefatorada();
+        app.runCli();
     }
 
-    private void run() {
+    public void runCli() {
         Scanner scanner = new Scanner(System.in);
-        int opcao;
-
         while (true) {
-            mostrarMenu();
-            opcao = lerInteiro(scanner);
-
-            if (opcao == 0) {
-                System.out.println("Encerrando a calculadora...");
+            printMenu();
+            int option = readInt(scanner);
+            if (option == 0) {
+                System.out.println("Encerrando...");
                 break;
             }
-
-            if (opcao == 5) {
-                mostrarHistorico();
+            if (option == 5) {
+                printHistory();
                 continue;
             }
 
-            System.out.print("Digite o primeiro número: ");
-            int a = lerInteiro(scanner);
+            System.out.print("Primeiro número: ");
+            int a = readInt(scanner);
+            System.out.print("Segundo número: ");
+            int b = readInt(scanner);
 
-            System.out.print("Digite o segundo número: ");
-            int b = lerInteiro(scanner);
-
-            String resultado = calculator.calculate(opcao, a, b);
-            System.out.println("Resultado: " + resultado);
+            String result = calculate(option, a, b);
+            System.out.println("Resultado: " + result);
+            history.add(result);
         }
-
         scanner.close();
     }
 
-    private void mostrarMenu() {
-        System.out.println("\n=== Calculadora Simples ===");
+    private void printMenu() {
+        System.out.println("\n=== Calculadora Refatorada ===");
         System.out.println("1. Soma");
         System.out.println("2. Subtração");
         System.out.println("3. Multiplicação");
         System.out.println("4. Divisão");
         System.out.println("5. Ver histórico");
         System.out.println("0. Sair");
-        System.out.print("Escolha uma opção: ");
+        System.out.print("Escolha a opção: ");
     }
 
-    private void mostrarHistorico() {
-        ArrayList<String> lista = history.getAll();
-
-        if (lista.isEmpty()) {
-            System.out.println("Nenhuma operação realizada ainda.");
-            return;
-        }
-
-        System.out.println("\n=== Histórico de Operações ===");
-        for (String h : lista) {
-            System.out.println(h);
-        }
-    }
-
-    private int lerInteiro(Scanner scanner) {
+    private int readInt(Scanner scanner) {
         while (!scanner.hasNextInt()) {
-            System.out.print("Valor inválido. Digite um número inteiro: ");
+            System.out.print("Entrada inválida. Digite um número inteiro: ");
             scanner.next();
         }
         return scanner.nextInt();
     }
-}
 
+    private void printHistory() {
+        List<String> all = history.getAll();
+        if (all.isEmpty()) {
+            System.out.println("Nenhuma operação realizada.");
+            return;
+        }
+        System.out.println("\n--- Histórico ---");
+        for (String entry : all) {
+            System.out.println(entry);
+        }
+    }
+    
+    public String calculate(int option, int a, int b) {
+        switch (option) {
+            case 1:
+                return format(a, "+", b, a + b);
+            case 2:
+                return format(a, "-", b, a - b);
+            case 3:
+                return format(a, "*", b, a * b);
+            case 4:
+                if (b == 0) {
+                    return "Erro: divisão por zero!";
+                }
+                return format(a, "/", b, a / b);
+            default:
+                return "Opção inválida!";
+        }
+    }
+
+    private String format(int a, String op, int b, int result) {
+        return a + " " + op + " " + b + " = " + result;
+    }
+
+    public List<String> getHistory() {
+        return history.getAll();
+    }
+}
