@@ -5,7 +5,7 @@ import core.History;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestTDD {
+public class History {
 
     @Test
     void somaDeveFuncionar() {
@@ -17,3 +17,4 @@ public class TestTDD {
         assertEquals("5 + 7 = 12", resultado);
     }
 }
+
