@@ -45,11 +45,11 @@ public class CalculadoraTest {
         assertEquals(4, resultado);
     }
 
-    // Testando divisão por zero (esperando exceção)
+    // Teste da divisão por zero — agora CORRETO
     @Test
     void deveFalharAoDividirPorZero() {
         Calculadora calc = new Calculadora();
 
-        assertThrows(ArithmeticException.class, () -> calc.dividir(10, 0));
+        assertThrows(IllegalArgumentException.class, () -> calc.dividir(10, 0));
     }
 }
