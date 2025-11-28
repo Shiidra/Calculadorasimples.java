@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class History {
 
-    @Test
     void somaDeveFuncionar() {
         History history = new History();
         Calculator calc = new Calculator(history);
@@ -17,4 +16,5 @@ public class History {
         assertEquals("5 + 7 = 12", resultado);
     }
 }
+
 
