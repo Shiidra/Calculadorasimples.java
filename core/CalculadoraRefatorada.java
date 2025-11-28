@@ -3,12 +3,12 @@ package core;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Calculadorasimples {
+public class CalculadoraSimples {
 
     private final Calculator calculator;
     private final History history;
 
-    public Calculadorasimples() {
+    public CalculadoraSimples() {
         this.history = new History();
         this.calculator = new Calculator(history);
     }
@@ -81,3 +81,4 @@ public class Calculadorasimples {
         return scanner.nextInt();
     }
 }
+
