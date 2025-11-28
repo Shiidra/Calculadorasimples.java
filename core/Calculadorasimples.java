@@ -1,11 +1,22 @@
+package core;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CalculadoraSimples {
 
+    private final History history;
+
+    public CalculadoraSimples() {
+        this.history = new History();
+    }
+
     public static void main(String[] args) {
+        new CalculadoraSimples().run();
+    }
+
+    private void run() {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<String> historico = new ArrayList<>();
         int opcao;
 
         while (true) {
@@ -17,27 +28,49 @@ public class CalculadoraSimples {
                 break;
             }
 
-            if (opcao == 5) { 
-                mostrarHistorico(historico);
+            if (opcao == 5) {
+                mostrarHistorico();
                 continue;
             }
 
             System.out.print("Digite o primeiro número: ");
-            double a = lerDouble(scanner);
+            int a = lerInteiro(scanner);
+
             System.out.print("Digite o segundo número: ");
-            double b = lerDouble(scanner);
+            int b = lerInteiro(scanner);
 
             String resultado = executarOperacao(opcao, a, b);
+
             if (resultado != null) {
                 System.out.println("Resultado: " + resultado);
-                historico.add(resultado);
+                history.add(resultado);
             }
         }
 
         scanner.close();
     }
 
-    private static void mostrarMenu() {
+    private String executarOperacao(int opcao, int a, int b) {
+
+        return switch (opcao) {
+            case 1 -> a + " + " + b + " = " + (a + b);
+            case 2 -> a + " - " + b + " = " + (a - b);
+            case 3 -> a + " * " + b + " = " + (a * b);
+            case 4 -> {
+                if (b == 0) {
+                    System.out.println("Erro: divisão por zero não permitida!");
+                    yield null;
+                }
+                yield a + " / " + b + " = " + (a / b);
+            }
+            default -> {
+                System.out.println("Opção inválida.");
+                yield null;
+            }
+        };
+    }
+
+    private void mostrarMenu() {
         System.out.println("\n=== Calculadora Simples ===");
         System.out.println("1. Soma");
         System.out.println("2. Subtração");
@@ -48,50 +81,25 @@ public class CalculadoraSimples {
         System.out.print("Escolha uma opção: ");
     }
 
-    private static String executarOperacao(int opcao, double a, double b) {
-        switch (opcao) {
-            case 1:
-                return a + " + " + b + " = " + (a + b);
-            case 2:
-                return a + " - " + b + " = " + (a - b);
-            case 3:
-                return a + " * " + b + " = " + (a * b);
-            case 4:
-                if (b == 0) {
-                    System.out.println("Erro: divisão por zero não permitida!");
-                    return null;
-                }
-                return a + " / " + b + " = " + (a / b);
-            default:
-                System.out.println("Opção inválida.");
-                return null;
-        }
-    }
+    private void mostrarHistorico() {
+        ArrayList<String> lista = history.getAll();
 
-    private static void mostrarHistorico(ArrayList<String> historico) {
-        if (historico.isEmpty()) {
+        if (lista.isEmpty()) {
             System.out.println("Nenhuma operação realizada ainda.");
-        } else {
-            System.out.println("\n=== Histórico de Operações ===");
-            for (String h : historico) {
-                System.out.println(h);
-            }
+            return;
+        }
+
+        System.out.println("\n=== Histórico de Operações ===");
+        for (String h : lista) {
+            System.out.println(h);
         }
     }
 
-    private static int lerInteiro(Scanner scanner) {
+    private int lerInteiro(Scanner scanner) {
         while (!scanner.hasNextInt()) {
             System.out.print("Valor inválido. Digite um número inteiro: ");
             scanner.next();
         }
         return scanner.nextInt();
-    }
-
-    private static double lerDouble(Scanner scanner) {
-        while (!scanner.hasNextDouble()) {
-            System.out.print("Valor inválido. Digite um número: ");
-            scanner.next();
-        }
-        return scanner.nextDouble();
     }
 }
