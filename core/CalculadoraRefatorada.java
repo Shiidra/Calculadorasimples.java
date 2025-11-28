@@ -5,16 +5,16 @@ import java.util.Scanner;
 
 public class CalculadoraSimples {
 
-    private final Calculator calculator;  // <-- Ajuste aqui se o nome real for outro
+    private final Calculator calculator; 
     private final History history;
 
     public CalculadoraSimples() {
         this.history = new History();
-        this.calculator = new Calculator(history); // <-- Ajuste aqui também
+        this.calculator = new Calculator(history); 
     }
 
     public static void main(String[] args) {
-        new CalculadoraSimples().run(); // <-- AGORA ESTÁ CORRETO
+        new CalculadoraSimples().run(); 
     }
 
     private void run() {
@@ -81,3 +81,4 @@ public class CalculadoraSimples {
         return scanner.nextInt();
     }
 }
+
