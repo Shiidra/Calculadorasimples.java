@@ -1,20 +1,17 @@
-package test;
+package core;
 
-import core.Calculator;
-import core.History;
-import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class History {
 
-public class HistoryTest {
+    private final ArrayList<String> historico = new ArrayList<>();
 
-    @Test
-    public void somaDeveFuncionar() {
-        History history = new History();
-        Calculator calc = new Calculator(history);
+    public void add(String operacao) {
+        historico.add(operacao);
+    }
 
-        String resultado = calc.calculate(1, 5, 7);
-
-        assertEquals("5 + 7 = 12", resultado);
+    public ArrayList<String> getAll() {
+        return historico;
     }
 }
+
