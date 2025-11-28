@@ -17,7 +17,7 @@ public class CalculadoraSimples {
                 break;
             }
 
-            if (opcao == 5) { // opção para ver histórico
+            if (opcao == 5) { 
                 mostrarHistorico(historico);
                 continue;
             }
