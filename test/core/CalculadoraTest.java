@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CalculadoraTest {
 
     @Test
-    void somaDeveFuncionar() {
+    public void somaDeveFuncionar() {
         History history = new History();
         Calculator calc = new Calculator(history);
 
