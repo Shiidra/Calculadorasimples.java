@@ -1,7 +1,6 @@
 package core;
 
 // Essa é a versão refatorada da calculadora.
-// Agora cada parte faz só o que precisa fazer.
 public class Calculadora {
 
     // Método só para somar.
@@ -31,3 +30,4 @@ public class Calculadora {
         return a / b;
     }
 }
+
