@@ -1,13 +1,16 @@
-import core.CalculadoraRefatorada;
+import core.Calculadora;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+// Esse é o teste que garante que a soma funciona.
 public class CalculadoraTest {
 
     @Test
-    public void somaDeveFuncionar() {
-        CalculadoraRefatorada calc = new CalculadoraRefatorada();
-        String resultado = calc.calculate(1, 5, 7);
-        assertEquals("5 + 7 = 12", resultado);
+    void somaDeveFuncionar() {
+        Calculadora calc = new Calculadora();
+
+        int resultado = calc.somar(5, 7);
+
+        assertEquals(12, resultado);
     }
 }
