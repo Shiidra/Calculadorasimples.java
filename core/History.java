@@ -1,17 +1,17 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class History {
 
-    private final ArrayList<String> historico = new ArrayList<>();
+    private final ArrayList<String> items = new ArrayList<>();
 
-    public void add(String operacao) {
-        historico.add(operacao);
+    public void add(String entry) {
+        items.add(entry);
     }
 
     public ArrayList<String> getAll() {
-        return historico;
+        return new ArrayList<>(items);
     }
 }
-
